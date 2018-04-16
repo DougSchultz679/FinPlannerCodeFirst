@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Financial Planner">
+    <meta name="author" content="Douglas Schultz">
+
+    <title>Financial Planner App</title>
+
+    <!-- vendor css -->
+    <link href="~/Assets/Template/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Assets/Template/lib/Ionicons/css/ionicons.css" rel="stylesheet" />
+    <link href="~/Assets/Template/lib/chartist/css/chartist.css" rel="stylesheet" />
+    <link href="~/Assets/Template/lib/rickshaw/css/rickshaw.min.css" rel="stylesheet" />
+
+
+    <!-- Slim CSS -->
+    <link href="~/Assets/Template/css/slim.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    <script src="~/Assets/Template/lib/jquery/js/jquery.js"></script>
+    <script src="~/Assets/Template/lib/popper.js/js/popper.js"></script>
+    <script src="~/Assets/Template/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Assets/Template/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Assets/Template/lib/chartist/js/chartist.js"></script>
+    <script src="~/Assets/Template/lib/d3/js/d3.js"></script>
+    <script src="~/Assets/Template/lib/rickshaw/js/rickshaw.min.js"></script>
+    <script src="~/Assets/Template/lib/jquery.sparkline.bower/js/jquery.sparkline.min.js"></script>
+    <script src="~/Assets/Template./js/ResizeSensor.js"></script>
+    <script src="~/Assets/Template/js/dashboard.js"></script>
+    <script src="~/Assets/Template/js/slim.js"></script>
+
+    <!--FIX THIS-->
+    @RenderSection("scripts", required: false)
+</body>
+</html>

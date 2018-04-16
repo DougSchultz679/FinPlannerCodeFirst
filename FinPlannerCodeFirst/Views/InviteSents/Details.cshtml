@@ -1,0 +1,42 @@
+﻿@model FinPlannerCodeFirst.Models.InviteSent
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>InviteSent</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.InviteId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.InviteId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.IsValid)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.IsValid)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

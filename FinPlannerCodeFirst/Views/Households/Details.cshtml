@@ -1,34 +1,81 @@
-﻿@model FinPlannerCodeFirst.Models.Household
+﻿@model FinPlannerCodeFirst.Models.ViewModels.HouseholdViewModel
 
-@{
-    Layout = null;
-}
+<div class="container">
+    <div class="slim-pageheader">
+        <h6 class="slim-pagetitle">Your Household - @Model.HHName</h6>
+    </div><!-- slim-pageheader -->
+    <div class="row row-sm">
+        <div class="col-lg-8">
+            <div class="card card-recommendation mg-t-20">
+                <div class="card-body pd-25">
+                    <div class="slim-card-title">Household members</div>
+                @*FIX THIS - datatable for users*@
 
-<!DOCTYPE html>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                    <p class="mg-b-0">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+                </div><!-- card-body -->
+                <div class="card-body pd-25">
+                    <div class="slim-card-title">Household members</div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>Household</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-    
-        </dl>
+
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                    <p class="mg-b-0">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+                </div><!-- card-body --><div class="card-body pd-25">
+                    <div class="slim-card-title">Household members</div>
+
+
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                    <p class="mg-b-0">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+                </div><!-- card-body -->
+
+            </div>
+        </div>
+        <div class="col-lg-4 mg-t-20 mg-lg-t-0">
+            <div class="card card-connection">
+                <div class="row row-xs">
+                    <div class="col-12">
+                        <h5>About Households</h5>
+                        <p>
+                            Households are how we group acocunts and users.
+                        </p>
+                    </div>
+                </div><!-- row -->
+                <hr>
+                <div class="row row-xs">
+                    <div class="col-12">
+                        <p>
+                            Each user belongs to one household, but a household can have many users.
+                        </p>
+                    </div>
+                </div><!-- row -->
+                <div class="row row-xs">
+                    <div class="col-12">
+                        <p>
+                            Each user that is part of the household has access to all household accounts and budget information.
+                        </p>
+                    </div>
+                </div><!-- row -->
+            </div><!-- card -->
+
+        </div>
+
+        <div>
+            <h4>Household</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.HHName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.HHName)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+
+</div>

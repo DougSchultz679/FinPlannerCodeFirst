@@ -1,50 +1,50 @@
 ﻿@model FinPlannerCodeFirst.Models.ViewModels.HouseholdViewModel
-@if (Model.IsJoinHouse)
-{
-    <h2>Join Household</h2>
 
-    using (Html.BeginForm("JoinHousehold", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+<div class="container">
+    @if (Model.IsJoinHouse)
     {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.HHId)
-        <h4>Welcome to the <strong>@Model.HHName</strong> household.  Click the <a class="btn-xs btn-info">JOIN</a> below.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @*@Html.LabelFor(m => m.HHName, new { @class = "col-md-2 control-label" })
+        <h2>Join Household</h2>
+
+        using (Html.BeginForm("JoinHousehold", "Households", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.HHId)
+            <h4>Welcome to the <strong>@Model.HHName</strong> household.  Click the <a class="btn-xs btn-info">JOIN</a> below.</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="JOIN" />
+                </div>
+            </div>
+        }
+    } else
+    {
+        <h2>Create Household</h2>
+        using (Html.BeginForm("Create", "Households", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h5>Create a brand new household account. You'll be the first member!</h5>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-2 control-label">
+                    <p>Household Name</p>
+                </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(m => m.HHName, new { @class = "form-control disabled" })
-                </div>*@
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="JOIN" />
+                    @Html.TextBoxFor(m => m.HHName, new { @class = "form-control" })
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                </div>
+            </div>
+        }
     }
-} else
-{
-    <h2>Create Household</h2>
-    using (Html.BeginForm("CreateHousehold", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(m => m.HHName, new { @class = "col-md-2 control-label" })
-            <div class="col-md-4">
-                @Html.TextBoxFor(m => m.HHName, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Submit" />
-            </div>
-        </div>
-    }
-}
+</div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

@@ -52,8 +52,14 @@ namespace FinPlannerCodeFirst.Controllers
                     // FIX THIS connects to nothing
                     return RedirectToAction("InviteError", new { errMsg = msg });
                 }
+            } else
+            {
+                vm.IsJoinHouse = false;
+
+                return View(vm);
             }
-            return View(vm);
+            //fix this - needs route param for household details
+            return RedirectToAction("Details", new { });
         }
 
         private bool ValidInvite(Guid? code, ref string message)
@@ -82,22 +88,21 @@ namespace FinPlannerCodeFirst.Controllers
         // GET: Households/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            //CHECK THIS - that household IDs never equal to 0 due to database scheme
+            if (id == 0 || id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Household household = db.Households.Find(id);
-            if (household == null)
-            {
-                return HttpNotFound();
-            }
-            return View(household);
-        }
+            var hh = db.Households.Find(id);
 
-        // GET: Households/Create
-        public ActionResult Create()
-        {
-            return View();
+            HouseholdViewModel hhvm = new HouseholdViewModel {
+                HHObj = hh,
+                HHId = (int)id,
+                HHName = hh.Name,
+                IsJoinHouse = false
+            };
+
+            return View(hhvm);
         }
 
         // POST: Households/Create
@@ -105,17 +110,33 @@ namespace FinPlannerCodeFirst.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Household household)
+        [Authorize]
+        public ActionResult Create(string HHName)
         {
-            if (ModelState.IsValid)
-            {
-                db.Households.Add(household);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            Household hh = new Household {
+                Id = 0,
+                Name = HHName
+            };
+            HouseholdHelper helper = new HouseholdHelper();
+            helper.AddUserToHousehold(User.Identity.GetUserId(), hh.Id);
 
-            return View(household);
+            db.Households.Add(hh);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = hh.Id });
         }
+
+        // POST: 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public ActionResult JoinHousehold(int HHId)
+        {
+            HouseholdHelper helper = new HouseholdHelper();
+            helper.AddUserToHousehold(User.Identity.GetUserId(), HHId);
+
+            return RedirectToAction("Details", new { id = HHId });
+        }
+
 
         // GET: Households/Edit/5
         public ActionResult Edit(int? id)

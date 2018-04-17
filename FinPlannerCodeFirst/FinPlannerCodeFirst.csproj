@@ -205,6 +205,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Helpers\CustomAttr.cs" />
+    <Compile Include="Models\Helpers\HouseholdHelper.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\DataModels.cs" />
     <Compile Include="Models\Helpers\ClaimsHelper.cs" />

@@ -10,6 +10,7 @@ namespace FinPlannerCodeFirst.Models.ViewModels
         public string HHName { get; set; }
         public int HHId { get; set; }
         public bool IsJoinHouse { get; set; }
-
+        public Household HHObj { get; set; }
+        public List<ApplicationUser> HHUsers {get;set;}
     }
 }

@@ -4,9 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using FinPlannerCodeFirst.Models;
+using FinPlannerCodeFirst.Models.Helpers;
+using Microsoft.AspNet.Identity;
 
 namespace FinPlannerCodeFirst.Controllers
 {
@@ -49,18 +52,27 @@ namespace FinPlannerCodeFirst.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,HouseholdId,Email,HHToken,InviteDate,InvitedById,HasBeenUsed")] Invite invite)
+        async public Task<ActionResult> Create(string email, int hhId, string invName)
         {
-            if (ModelState.IsValid)
-            {
-                db.Invites.Add(invite);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            Invite i = new Invite() {
+                Id = 0,
+                HouseholdId = hhId,
+                HHToken = new Guid(),
+                InviteDate = DateTimeOffset.Now,
+                InvitedById = User.Identity.GetUserId(),
+                Email = email,
+                HasBeenUsed = false
+            };
+           
+            EmailSender es = new EmailSender();
+            //FIX THIS - should send user to household dash
+            var callbackUrl = Url.Action("Details", "Tickets", null, protocol: Request.Url.Scheme);
 
-            ViewBag.HouseholdId = new SelectList(db.Households, "Id", "Name", invite.HouseholdId);
-            ViewBag.InvitedById = new SelectList(db.Users, "Id", "FirstName", invite.InvitedById);
-            return View(invite);
+            await es.SendInviteNoti(User.Identity.Name, callbackUrl, invName, email, i.HHToken);
+
+            db.Invites.Add(i);
+            db.SaveChanges();
+            return RedirectToAction("Details","Households",new {id=hhId });
         }
 
         // GET: Invites/Edit/5

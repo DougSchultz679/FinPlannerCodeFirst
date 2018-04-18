@@ -2,41 +2,117 @@
 
 <div class="container">
     <div class="slim-pageheader">
+        <ol class="breadcrumb slim-breadcrumb">
+            @*<li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Profile Page</li>*@
+        </ol>
         <h6 class="slim-pagetitle">Your Household - @Model.HHName</h6>
     </div><!-- slim-pageheader -->
     <div class="row row-sm">
         <div class="col-lg-8">
             <div class="card card-recommendation mg-t-20">
-                <div class="card-body pd-25">
+                <div class="card-body">
                     <div class="slim-card-title">Household members</div>
-                @*FIX THIS - datatable for users*@
+                    @*FIX THIS - datatable for users*@
+                    <table id="data-table" class="table">
+                        <thead>
+                            <tr>
+                                <th tabindex="0" rowspan="1" colspan="1">
+                                    Member
+                                </th>
+                                <th tabindex="0" rowspan="1" colspan="1">
+                                    E-mail
+                                </th>
 
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                    <p class="mg-b-0">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th rowspan="1" colspan="1">Member</th>
+                                <th rowspan="1" colspan="1">E-mail</th>
+
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @{
+                                foreach (var m in Model.HHObj.Members)
+                                {
+                                    <tr>
+                                        <td rowspan="1" colspan="1">
+                                            @m.FullName
+                                        </td>
+                                        <td rowspan="1" colspan="1">@m.Email</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+
                 </div><!-- card-body -->
-                <div class="card-body pd-25">
-                    <div class="slim-card-title">Household members</div>
-
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                    <p class="mg-b-0">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
-                </div><!-- card-body --><div class="card-body pd-25">
-                    <div class="slim-card-title">Household members</div>
-
-
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                    <p class="mg-b-0">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
-                </div><!-- card-body -->
-
             </div>
+            <div class="card card-recommendation mg-t-20">
+                <div class="card-body">
+                    <div class="slim-card-title">Invite a new household member</div>
+                    <p>Please fill in the form below and press the 'Submit' button to send an e-mail invite to someone you want to join your household.</p>
+                    @using (Html.BeginForm("Create", "Invites",FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            @*FIX THIS - value not being passed as argument to Create action.*@
+                            <text name="hhId" value="@Model.HHId" hidden></text>
+
+                            <div class="form-group">
+                                Invitee name
+                                <div class="col-md-10">
+                                    <input type="text" name="invName" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                Invitee e-mail
+                                <div class="col-md-10">
+                                    <input type="text" name="email" class="form-control" />
+                                    @*FIX THIS - make validation message for correct email*@
+                                    @*@Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Send Invite" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div><!-- card-body -->
+            </div>
+
+            <div class="card card-recommendation mg-t-20">
+                <div class="card-body">
+                    <div class="slim-card-title">Household members</div>
+
+
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                    <p class="mg-b-0">Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
+                </div><!-- card-body -->
+            </div>
+
         </div>
         <div class="col-lg-4 mg-t-20 mg-lg-t-0">
-            <div class="card card-connection">
+            <div class="card card-connection mg-t-20">
                 <div class="row row-xs">
                     <div class="col-12">
                         <h5>About Households</h5>
                         <p>
-                            Households are how we group acocunts and users.
+                            Households are how we group accounts and users.
                         </p>
                     </div>
                 </div><!-- row -->
@@ -58,24 +134,20 @@
             </div><!-- card -->
 
         </div>
-
-        <div>
-            <h4>Household</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.HHName)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.HHName)
-                </dd>
-
-            </dl>
-        </div>
-        <p>
-            @Html.ActionLink("Back to List", "Index")
-        </p>
     </div>
-
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 </div>
+
+@section scripts {
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script>
+        $('#data-table').dataTable({
+            "sPaginationType": "full_numbers",
+            "searching": false,
+            "lengthChange": false,
+            "paging": false
+        });
+    </script>
+}

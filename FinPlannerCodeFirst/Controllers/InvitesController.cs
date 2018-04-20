@@ -57,16 +57,15 @@ namespace FinPlannerCodeFirst.Controllers
             Invite i = new Invite() {
                 Id = 0,
                 HouseholdId = hhId,
-                HHToken = new Guid(),
+                HHToken = Guid.NewGuid(),
                 InviteDate = DateTimeOffset.Now,
                 InvitedById = User.Identity.GetUserId(),
                 Email = email,
                 HasBeenUsed = false
             };
-           
+
             EmailSender es = new EmailSender();
-            //FIX THIS - should send user to household dash
-            var callbackUrl = Url.Action("Details", "Tickets", null, protocol: Request.Url.Scheme);
+            var callbackUrl = Url.Action("CreateJoinHousehold", "Households", new { code=i.HHToken }, protocol: Request.Url.Scheme);
 
             await es.SendInviteNoti(User.Identity.Name, callbackUrl, invName, email, i.HHToken);
 

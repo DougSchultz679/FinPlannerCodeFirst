@@ -65,7 +65,7 @@
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                             @*FIX THIS - value not being passed as argument to Create action.*@
-                            <text name="hhId" value="@Model.HHId" hidden></text>
+                            <input name="hhId" value="@Model.HHId" hidden>
 
                             <div class="form-group">
                                 Invitee name

@@ -23,8 +23,7 @@ namespace FinPlannerCodeFirst.Controllers
             //If the current user accessing this page already has a HouseholdId, send them to their dashboard
             if (User.Identity.IsInHousehold())
             {
-                //FIX THIS - double check
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Details",new { id=User.Identity.GetHouseholdId() } );
             }
 
             HouseholdViewModel vm = new HouseholdViewModel();
@@ -49,7 +48,6 @@ namespace FinPlannerCodeFirst.Controllers
                     db.SaveChanges();
                 } else
                 {
-                    // FIX THIS connects to nothing
                     return RedirectToAction("InviteError", new { errMsg = msg });
                 }
             } else
@@ -59,7 +57,7 @@ namespace FinPlannerCodeFirst.Controllers
                 return View(vm);
             }
             //fix this - needs route param for household details
-            return RedirectToAction("Details", new { });
+            return RedirectToAction("Details", new { id=vm.HHId });
         }
 
         private bool ValidInvite(Guid? code, ref string message)

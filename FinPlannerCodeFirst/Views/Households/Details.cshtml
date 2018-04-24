@@ -14,7 +14,6 @@
             <div class="card card-recommendation mg-t-20">
                 <div class="card-body">
                     <div class="slim-card-title">Household members</div>
-                    @*FIX THIS - datatable for users*@
                     <table id="data-table" class="table">
                         <thead>
                             <tr>
@@ -49,14 +48,13 @@
                         </tbody>
                     </table>
 
-
                 </div><!-- card-body -->
             </div>
             <div class="card card-recommendation mg-t-20">
                 <div class="card-body">
                     <div class="slim-card-title">Invite a new household member</div>
                     <p>Please fill in the form below and press the 'Submit' button to send an e-mail invite to someone you want to join your household.</p>
-                    @using (Html.BeginForm("Create", "Invites",FormMethod.Post))
+                    @using (Html.BeginForm("Create", "Invites", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
 
@@ -83,8 +81,6 @@
                                 </div>
                             </div>
 
-
-
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Send Invite" class="btn btn-primary" />
@@ -97,7 +93,7 @@
 
             <div class="card card-recommendation mg-t-20">
                 <div class="card-body">
-                    <div class="slim-card-title">Household members</div>
+                    <div class="slim-card-title">Leave Household</div>
 
 
                     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
@@ -132,22 +128,74 @@
                     </div>
                 </div><!-- row -->
             </div><!-- card -->
+            <div class="card mg-t-20">
+                <div class="card-body">
+                    <div class="slim-card-title">Outstanding invites</div>
+                    @{ if (Model.HHInvites.Count() != 0)
+                        {
+                            <table id="data-table2" class="table">
+                                <thead>
+                                    <tr>
+                                        <th tabindex="0" rowspan="1" colspan="1">
+                                            E-mail
+                                        </th>
+                                        <th tabindex="0" rowspan="1" colspan="1">
+                                            Invite Date
+                                        </th>
+                                        <th tabindex="0" rowspan="1" colspan="1">
+                                            Days Left
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th rowspan="1" colspan="1">
+                                            E-mail
+                                        </th>
+                                        <th rowspan="1" colspan="1">Invite Date</th>
+                                        <th rowspan="1" colspan="1">Days Left</th>
 
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach (var i in Model.HHInvites)
+                                    {
+                                        <tr>
+                                            <td rowspan="1" colspan="1">
+                                                @i.Email
+                                            </td>
+                                            <td rowspan="1" colspan="1">@i.InviteDate.ToString("d")</td>
+                                            @*Fix this - could use nested ternary to show hours or minutes left in invite*@
+                                            <td rowspan="1" colspan="1">@(String.Format("{0:F2}", (DateTimeOffset.Now - i.InviteDate).TotalDays))</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        } else
+                        {
+                            <br/>
+                            <p><i>No outstanding invites!</i></p>
+                        }
+                    }
+                </div>
+            </div>
         </div>
     </div>
-    <p>
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</div>
 
-@section scripts {
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script>
-        $('#data-table').dataTable({
-            "sPaginationType": "full_numbers",
-            "searching": false,
-            "lengthChange": false,
-            "paging": false
-        });
-    </script>
-}
+    @section scripts {
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script>
+            $('#data-table').dataTable({
+                "sPaginationType": "full_numbers",
+                "searching": false,
+                "lengthChange": false,
+                "paging": false
+            });
+            $('#data-table2').dataTable({
+                "sPaginationType": "full_numbers",
+                "searching": false,
+                "lengthChange": false,
+                "paging": false
+            });
+        </script>
+    }

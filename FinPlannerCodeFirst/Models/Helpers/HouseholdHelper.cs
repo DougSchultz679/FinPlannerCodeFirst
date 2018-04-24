@@ -29,6 +29,23 @@ namespace FinPlannerCodeFirst.Models.Helpers
             }
         }
 
+        public Exception RemoveUserFromHousehold(string uid, int hhId)
+        {
+            try
+            {
+                ApplicationUser user = db.Users.Find(uid);
+                if (user.HouseholdId.HasValue)
+                {
+                    user.HouseholdId = null;
+                    db.SaveChanges();
+                }
+                return null;
+            } catch (Exception ex)
+            {
+                return ex;
+            }
+        }
+
 
 
     }

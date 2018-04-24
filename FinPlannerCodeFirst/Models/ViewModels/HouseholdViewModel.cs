@@ -12,5 +12,6 @@ namespace FinPlannerCodeFirst.Models.ViewModels
         public bool IsJoinHouse { get; set; }
         public Household HHObj { get; set; }
         public List<ApplicationUser> HHUsers {get;set;}
+        public List<Invite> HHInvites { get; set; }
     }
 }

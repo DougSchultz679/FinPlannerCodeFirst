@@ -9,7 +9,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.HHId)
-            <h4>Welcome to the <strong>@Model.HHName</strong> household.  Click the <a class="btn-xs btn-info">JOIN</a> below.</h4>
+            <h4>Welcome to the <strong>@Model.HHName</strong> household!  Click the <a class="btn-xs btn-info">JOIN</a> button below.</h4>
             <hr />
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">

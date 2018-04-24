@@ -29,7 +29,7 @@ namespace FinPlannerCodeFirst.Models.Helpers
             {
                 filterContext.Result = new RedirectToRouteResult(new
                     RouteValueDictionary(new {
-                        controller = "Home",
+                        controller = "Households",
                         //This action doesn't exist yet
                         action = "CreateJoinHousehold"
                     }));

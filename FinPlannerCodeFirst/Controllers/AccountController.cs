@@ -449,6 +449,7 @@ namespace FinPlannerCodeFirst.Controllers
             {
                 return Redirect(returnUrl);
             }
+            //FIX THIS - this bounces unauthenticated users 
             return RedirectToAction("Index", "Home");
         }
 

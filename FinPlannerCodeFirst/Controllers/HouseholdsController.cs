@@ -18,12 +18,13 @@ namespace FinPlannerCodeFirst.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Households
+        [AuthorizeHouseholdRequired]
         public ActionResult CreateJoinHousehold(Guid? code)
         {
             //If the current user accessing this page already has a HouseholdId, send them to their dashboard
             if (User.Identity.IsInHousehold())
             {
-                return RedirectToAction("Details",new { id=User.Identity.GetHouseholdId() } );
+                return RedirectToAction("Details", new { id = User.Identity.GetHouseholdId() });
             }
 
             HouseholdViewModel vm = new HouseholdViewModel();
@@ -40,24 +41,24 @@ namespace FinPlannerCodeFirst.Controllers
                     vm.HHId = result.HouseholdId;
                     vm.HHName = result.Household.Name;
 
-                    //Set USED flag to true for this invite
                     result.HasBeenUsed = true;
 
+                    // FIX THIS - why is this done 
                     ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
                     user.InviteEmail = result.Email;
                     db.SaveChanges();
                 } else
                 {
+                    //FIX THIS - does not exist
                     return RedirectToAction("InviteError", new { errMsg = msg });
                 }
             } else
             {
                 vm.IsJoinHouse = false;
-
                 return View(vm);
             }
             //fix this - needs route param for household details
-            return RedirectToAction("Details", new { id=vm.HHId });
+            return RedirectToAction("Details", new { id = vm.HHId });
         }
 
         private bool ValidInvite(Guid? code, ref string message)
@@ -74,7 +75,6 @@ namespace FinPlannerCodeFirst.Controllers
                 {
                     message = "valid";
                 }
-
                 return !result;
             } else
             {
@@ -97,11 +97,21 @@ namespace FinPlannerCodeFirst.Controllers
                 HHObj = hh,
                 HHId = (int)id,
                 HHName = hh.Name,
-                IsJoinHouse = false
+                IsJoinHouse = false,
+                HHInvites = db.Invites.Where(i => i.HouseholdId == id && i.HasBeenUsed == false).ToList()
             };
 
             return View(hhvm);
         }
+
+        //POST: Households/LeaveHousehold
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult LeaveHousehold(int hhId, string uId)
+        //{
+        //    var helper = new HouseholdHelper();
+        //    helper.RemoveUserFromHousehold(uId, hhId);
+        //}
 
         // POST: Households/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
